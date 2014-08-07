@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<title>slide demo</title>
+<script type="text/javascript" src="public/javascript/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="public/javascript/slide.js"></script>
+<link rel="stylesheet" type="text/css" href="public/stylesheet/slide.css">
+</head>
+<body>
+	<div class="container">
+		
+	</div>
+	
+	<script type="text/javascript">
+		
+		(function() {
+			var container = $(".container");
+			ops={
+				speed: 1000,
+				step: 2000,
+				size:{width:"500px",height:"200px"},
+				imgs:["src/image/gbtags1.jpg","src/image/gbtags2.jpg","src/image/gbtags3.jpg","src/image/gbtags4.jpg"]
+			}
+			var slider = new slide(container,ops);
+			// slider();
+		})();
+	</script>
+</body>
+</html>
