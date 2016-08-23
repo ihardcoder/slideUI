@@ -19,6 +19,7 @@ slide.prototype.init = function() {
 	this.images = this.ops && this.ops.imgs;
 	this.sum = this.images.length != 0 && this.images.length;
 	this.appendItem();
+    this.lock = false;
 }
 // insert sliders and controller
 slide.prototype.appendItem = function() {
@@ -41,13 +42,19 @@ slide.prototype.appendItem = function() {
 slide.prototype.bind = function() {
 	var _this =this;
 	var $controller = $(".controller");
+
 	$controller.on("click", ".slide-prev", function() {
+        if(_this.lock){
+            return;
+        }
+        _this.lock = true;
 		var cur = $(".current"),
 			prev = _this.prevSlide($(".current"), _this.sum);
 		cur.animate({
 			left: "100%"
 		}, 500, function() {
 			$(this).removeClass("current");
+            _this.lock = false;
 		});
 		prev.css({
 			left: "-100%"
@@ -55,15 +62,21 @@ slide.prototype.bind = function() {
 			left: "0"
 		}, 500, function() {
 			$(this).addClass("current");
+            _this.lock = false;
 		});
 	})
 		.on("click", ".slide-next", function() {
+            if(_this.lock){
+                return;
+            }
+            _this.lock = true;
 			var cur = $(".current"),
 				next = _this.nextSlide($(".current"), _this.sum);
 			cur.animate({
 				left: "-100%"
 			}, 500, function() {
 				$(this).removeClass("current");
+                _this.lock = false;
 			});
 			next.css({
 				left: "100%"
@@ -71,23 +84,24 @@ slide.prototype.bind = function() {
 				left: "0"
 			}, 500, function() {
 				$(this).addClass("current");
+                _this.lock = false;
 			});
 		});
-	setInterval(function() {
-		var next = _this.nextSlide($(".current"), _this.sum);
-		$(".current").animate({
-			left: "-100%"
-		}, 1000, function() {
-			$(this).removeClass("current");
-		});
-		next.css({
-			left: "100%"
-		}).animate({
-			left: "0"
-		}, 999, function() {
-			$(this).addClass("current");
-		});
-	}, 2000);
+	// setInterval(function() {
+	// 	var next = _this.nextSlide($(".current"), _this.sum);
+	// 	$(".current").animate({
+	// 		left: "-100%"
+	// 	}, 1000, function() {
+	// 		$(this).removeClass("current");
+	// 	});
+	// 	next.css({
+	// 		left: "100%"
+	// 	}).animate({
+	// 		left: "0"
+	// 	}, 999, function() {
+	// 		$(this).addClass("current");
+	// 	});
+	// }, 2000);
 }
 
 slide.prototype.nextSlide = function(el, sum) {
